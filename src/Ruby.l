@@ -5,12 +5,11 @@
     /*lexer with symbol table */
 enum {
       LOOKUP = 0, /*Default - looking rather than defining*/
-      KEYWORDS,
-      VARNAME,
 };
 %}
 
-
+/*We can define int state to store the state of our lookup table */
+/* we can say state = VARNAME to store our variable names in a lookup table*/
 
 %%
  /* Keywords in Ruby -- Start */
@@ -28,7 +27,7 @@ break |
 case |
 class |
 def |
-defined? |
+"defined?" |
 do |
 else |
 elsif |
@@ -59,9 +58,25 @@ while |
 yield {printf("%s: is a keyword",yytext); }
  /*End of keywords*/
  /*Checks to confirm other words are not keywords*/
-[a-zA-Z]+   { printf("%s: is not a keyword",yytext); }
+ /*ruby datatypes */
+"integer" | "float" | "string" | "array" { printf("%s: is a datatype",yytext); }
+ /*Defining integers */
+[+-]*[0-9]+[.]*[0-9]*  { printf("%d: is set to be an integer value",yytext); }
  /* ^ denotes that it must begin on a new line*/
-
+ /*Ruby operators*/
+"+=" |
+"-=" | 
+"*=" | 
+"/=" | 
+"%=" | 
+"**=" | 
+"&=" | 
+"|=" | 
+"^=" | 
+"<<=" | 
+">>=" | 
+"&&=" | 
+"||=" { printf("Operators",yytext);}
 %%
 
 int yywrap(void){

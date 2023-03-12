@@ -7,7 +7,7 @@
 %} 
 %token ';' "\n" '[' ']' '=' if until while unless do undef alias return yield and or not '!' "::" in end for super begin else '<' '*' '(' ')' ',' '.' '&' ">="
 %token '>' '+' '-' '/'  '%' "**"
-%type COMPSTMT
+
 %%
 
 PROGRAM : COMPSTMT {printf("%s\n",yytext);}
@@ -70,7 +70,7 @@ FUNCTION : OPERATION '[' "(" '[' CALL_ARGS ']' ")" ']'
            [else COMPSTMT]
            [ensure COMPSTMT]
             end
-         | class IDENTIFIER ['<' IDENTIFIER]
+         | class IDENTIFIER [ '<' IDENTIFIER ]
                   COMPSTMT
                   end
          | module IDENTIFIER
@@ -109,7 +109,7 @@ LHS : VARIABLE
     | PRIMARY "[" [ARGS] "]"
     | PRIMARY.IDENTIFIER   
     ;
-MRHS : ARGS [',' '*' ARG] 
+MRHS : ARGS [ , * ARG] 
      | '*' ARG
 
 CALL_ARGS :  ARGS  
